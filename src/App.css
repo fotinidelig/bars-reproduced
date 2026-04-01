@@ -1,5 +1,6 @@
 .main-section {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 97vh;
@@ -12,8 +13,8 @@
     align-items: left;
     justify-content: center;
     height: 80vh;
-    width: 70vw;  
-    background-color: #f1f1f1;
+    width: 75vw;  
+    background-color: #fff;
     padding: 1rem;
 }
 
@@ -27,4 +28,31 @@
     font-size: 1rem;
     margin: 0;
     padding: 0;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.button-container button {
+    color: #076fa2;
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0.5rem 0;
+}
+
+.svg-container {
+    background-color: rgba(211, 211, 211, 0.619);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    height: 100%;
 }

@@ -1,9 +1,9 @@
 import { scaleLinear, scaleBand} from 'd3';
 
 
-const BarPlot = ({ height, width }) => {
+const BarPlotEnhanced = ({ height, width }) => {
     const MARGIN_x = 20;
-    const MARGIN_y = 30;
+    const MARGIN_y = 20;
 
     const data = [
         { count: 6, name: "Hantavirus" },
@@ -17,7 +17,6 @@ const BarPlot = ({ height, width }) => {
         { count: 54, name: "Brucella" },
     ];  
 
-    const xTickLabels = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
     const xScale = scaleLinear()
     .domain([0, 55])
     .range([0, width]);
@@ -27,31 +26,15 @@ const BarPlot = ({ height, width }) => {
     .range([height - MARGIN_y, MARGIN_y])
     .padding(.3); 
 
-
-    const xAxis = (
-        <g>
-            {xTickLabels.map((tick) => (
-                <text key={tick} x={xScale(tick)} y={25} textAnchor='middle' fontSize="12px" fill="#808080">
-                    {tick}
-                </text>
-            ))}
-        </g>
-    )
-
-    const gridLines = (
-        <g>
-            {xTickLabels.map((tick) => (
-                <line key={tick} x1={xScale(tick)} y1={MARGIN_y+5} x2={xScale(tick)} y2={height - MARGIN_y - 5} stroke="#808080" strokeWidth="1" opacity={.5} />
-            ))}
-            {<line key='x0' x1={xScale(0)} y1={MARGIN_y+5} x2={xScale(0)} y2={height - MARGIN_y - 5} stroke="black" strokeWidth="1" />}
-        </g>
-    )
-
-
     const bars = (
         <g>
             {data.map((d) => (
-                <rect key={d.name} x={xScale(0)} y={yScale(d.name)} width={xScale(d.count)} height={yScale.bandwidth()} fill="#076fa2" />
+                <rect rx="5" ry="5"
+                key={d.name} 
+                x={xScale(0)} 
+                y={yScale(d.name)} 
+                width={xScale(d.count)} 
+                height={yScale.bandwidth()} fill="#076fa2" />
             ))}
         </g>
     )
@@ -60,19 +43,39 @@ const BarPlot = ({ height, width }) => {
         <g>
             {data.map((d, i) =>
             (
-                <text key={i} x={d.count > 7 ? xScale(0.5) : xScale(d.count)+xScale(.5)} y={yScale(d.name)+yScale.bandwidth()/2} textAnchor="start" fontSize="14px" fill={d.count > 7 ? "white" : "#076fa2"}>
+                <text key={i} 
+                x={xScale(0.5)} 
+                y={yScale(d.name)+yScale.bandwidth()/2} 
+                dy="0.33em" textAnchor="start" fontSize="14px" fill={"white"}>
                     {d.name}
                 </text>
             ))}
         </g>
     )
 
+                    <text
+                        x={xScale(d.count - .5)}
+                        y={y + h / 2}
+                        dy="0.33em"
+                        textAnchor="end"
+                        fontSize={isHovered ? "13px" : "12px"}
+                        fontWeight={isHovered ? 600 : 400}
+                        fill={isHovered ? hoverLabelColor : baseLabelColor}
+                        style={{ transition: "font-size 140ms ease, fill 140ms ease" }}
+                    >
+                        {d.count}
+                    </text>
+                </g>
+            );
+        });
+    }, [data, hoveredName, xScale, yScale]);
+
     const inlineText = (
         <g>
-            <text x={xScale(0)} y={height - 20} textAnchor="start" fontSize="12px" fill="#808080">
+            <text x={xScale(0)} y={height - 15} textAnchor="start" fontSize="12px" fill="#808080">
             Sources: Laboratory-Acquired Infection Database; American Biological Safety Association
             </text>
-            <text x={xScale(0)} y={height - 5} textAnchor="start" fontSize="12px" fill="#808080">
+            <text x={xScale(0)} y={height} textAnchor="start" fontSize="12px" fill="#808080">
             The Economist (<a textDecoration="underline" target="_blank" href="https://www.economist.com/graphic-detail/2021/08/24/infections-caught-in-laboratories-are-surprisingly-common">original source</a>)
             </text>
         </g>
@@ -80,14 +83,14 @@ const BarPlot = ({ height, width }) => {
 
     return (
         <svg width={width} height={height} backgroundColor="#fff" overflow={"visible"}>
-            {/* <rect x={0} y={0} width="100%" height="100%" fill="lightgrey" /> */}
-            {xAxis}
-            {gridLines}
+            {/* {xAxis} */}
+            {/* {gridLines} */}
             {bars}
             {barText}
             {inlineText}
+            {barLabels}
         </svg>
     )
 }
 
-export default BarPlot;
+export default BarPlotEnhanced;
