@@ -29,12 +29,8 @@ const BarPlotEnhanced = ({ height, width }) => {
     const bars = (
         <g>
             {data.map((d) => (
-                <rect rx="5" ry="5"
-                key={d.name} 
-                x={xScale(0)} 
-                y={yScale(d.name)} 
-                width={xScale(d.count)} 
-                height={yScale.bandwidth()} fill="#076fa2" />
+                <rect
+                key={d.name} x={xScale(0)} y={yScale(d.name)} width={xScale(d.count)} height={yScale.bandwidth()} fill="#076fa2" />
             ))}
         </g>
     )
@@ -43,32 +39,23 @@ const BarPlotEnhanced = ({ height, width }) => {
         <g>
             {data.map((d, i) =>
             (
-                <text key={i} 
-                x={xScale(0.5)} 
-                y={yScale(d.name)+yScale.bandwidth()/2} 
-                dy="0.33em" textAnchor="start" fontSize="14px" fill={"white"}>
+                <text key={i} x={xScale(0.5)} y={yScale(d.name)+yScale.bandwidth()/2} dy="0.33em" textAnchor="start" fontSize="14px" fill={"white"}>
                     {d.name}
                 </text>
             ))}
         </g>
     )
 
-                    <text
-                        x={xScale(d.count - .5)}
-                        y={y + h / 2}
-                        dy="0.33em"
-                        textAnchor="end"
-                        fontSize={isHovered ? "13px" : "12px"}
-                        fontWeight={isHovered ? 600 : 400}
-                        fill={isHovered ? hoverLabelColor : baseLabelColor}
-                        style={{ transition: "font-size 140ms ease, fill 140ms ease" }}
-                    >
-                        {d.count}
-                    </text>
-                </g>
-            );
-        });
-    }, [data, hoveredName, xScale, yScale]);
+    const barLabels = (
+        <g>
+            {data.map((d, i) =>
+            (
+                <text key={i} x={xScale(d.count-.5)} y={yScale(d.name)+yScale.bandwidth()/2} dy="0.33em" textAnchor="end" fontSize="12px" fill={"lightgrey"}>
+                    {d.count}
+                </text>
+            ))}
+        </g>
+    )
 
     const inlineText = (
         <g>
