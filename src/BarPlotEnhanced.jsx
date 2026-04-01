@@ -2,7 +2,6 @@ import { scaleLinear, scaleBand} from 'd3';
 
 
 const BarPlotEnhanced = ({ height, width }) => {
-    const MARGIN_x = 20;
     const MARGIN_y = 20;
 
     const data = [
@@ -29,7 +28,7 @@ const BarPlotEnhanced = ({ height, width }) => {
     const bars = (
         <g>
             {data.map((d) => (
-                <rect
+                <rect rx="4" ry="4"
                 key={d.name} x={xScale(0)} y={yScale(d.name)} width={xScale(d.count)} height={yScale.bandwidth()} fill="#076fa2" />
             ))}
         </g>
