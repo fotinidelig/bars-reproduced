@@ -1,7 +1,7 @@
 import './App.css'
 import { useState } from 'react'
-import BarPlot from './BarPlot'
-import BarPlotEnhanced from './BarPlotEnhanced'
+import ResponsiveBarPlot from './BarPlot'
+import ResponsiveBarPlotEnhanced from './BarPlotEnhanced'
 
 function App() {
   const [isReproduction, setIsReproduction] = useState(true)
@@ -22,8 +22,8 @@ function App() {
             <h1 fontWeight="bold">Escape artists</h1>
             <p>Number of laboratory-acquired infections, 1970-2021</p>
             {isReproduction ? 
-            <BarPlot height={490} width={1070} /> : 
-            <BarPlotEnhanced height={490} width={1070} />}
+            <ResponsiveBarPlot height={490}/> : 
+            <ResponsiveBarPlotEnhanced height={490}/>}
           </div>
         </div>
       </section>

@@ -1,8 +1,12 @@
-import { scaleLinear, scaleBand} from 'd3';
+import { useRef } from "react";
+import { scaleBand, scaleLinear } from "d3";
+import { useDimensions } from "./use-dimensions";
 
 
-const BarPlotEnhanced = ({ height, width }) => {
+export const BarPlotEnhanced = ({ height, width }) => {
     const MARGIN_y = 20;
+
+    if (!width || !height) return null;
 
     const data = [
         { count: 6, name: "Hantavirus" },
@@ -79,4 +83,15 @@ const BarPlotEnhanced = ({ height, width }) => {
     )
 }
 
-export default BarPlotEnhanced;
+export const ResponsiveBarPlotEnhanced = ({ height = 490, ...props }) => {
+  const chartRef = useRef(null);
+  const chartSize = useDimensions(chartRef);
+
+  return (
+    <div ref={chartRef} style={{ width: "100%", height }}>
+      <BarPlotEnhanced width={chartSize.width} height={chartSize.height} {...props} />
+    </div>
+  );
+};
+
+export default ResponsiveBarPlotEnhanced;
